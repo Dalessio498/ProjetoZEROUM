@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Produtos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        input, select { padding: 5px; margin: 5px 0; width: 200px; }
+        button { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+
+<h2>Cadastro de Produtos</h2>
+
+<form th:action="@{/produtos/criar}" th:object="${produto}" method="post">
+    <input type="text" th:field="*{nomeProduto}" placeholder="Nome do produto" required />
+    <input type="text" th:field="*{marcaProduto}" placeholder="Marca" required />
+    <input type="text" th:field="*{categoriaProduto}" placeholder="Categoria" required />
+    <input type="number" th:field="*{precoProduto}" placeholder="Preço" step="0.01" required />
+    <button type="submit">Cadastrar</button>
+</form>
+
+<h2>Produtos Cadastrados</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Marca</th>
+        <th>Categoria</th>
+        <th>Preço</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="prod : ${produtos}">
+        <td th:text="${prod.id}"></td>
+        <td th:text="${prod.nomeProduto}"></td>
+        <td th:text="${prod.marcaProduto}"></td>
+        <td th:text="${prod.categoriaProduto}"></td>
+        <td th:text="${prod.precoProduto}"></td>
+        <td>
+            <a th:href="@{'/produtos/excluir/' + ${prod.id}}" onclick="return confirm('Tem certeza?')">Excluir</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
